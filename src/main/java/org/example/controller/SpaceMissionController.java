@@ -18,7 +18,7 @@ public class SpaceMissionController {
     public void run() {
         task1();
         task2();
-//        task3();
+        task3();
 //        task4();
 //        task5();
     }
@@ -37,6 +37,14 @@ public class SpaceMissionController {
         List<Astronaut> astronauts = spaceMissionService.getAstronautsBySpacecraftAndStatus(spacecraftInput);
 
         for(Astronaut a: astronauts){
+            System.out.println(a);
+        }
+        System.out.println("\n");
+    }
+
+    public void task3() {
+        List<Astronaut> sorted = spaceMissionService.sortAstronautsByExperienceAndName();
+        for(Astronaut a: sorted){
             System.out.println(a);
         }
         System.out.println("\n");
