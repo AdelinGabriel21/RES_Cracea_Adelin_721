@@ -2,10 +2,13 @@ package org.example.service;
 
 import org.example.model.Astronaut;
 import org.example.model.AstronautStatus;
+import org.example.model.MissionEvent;
+import org.example.model.Supply;
 import org.example.repository.AstronautRepo;
 import org.example.repository.MissionEventRepo;
 import org.example.repository.SupplyRepo;
 
+import java.util.AbstractMap;
 import java.util.List;
 
 public class SpaceMissionService {
@@ -109,5 +112,15 @@ public class SpaceMissionService {
                 })
                 .toList();
     }
+
+//4. (1 Punkt) Schreiben in eine Datei:
+// Schreiben Sie die in Aufgabe 3 sortierte Astronauten Liste in umgekehrter Reihenfolge in die Datei astronauts_sorted.txt.
+// Jeder Astronaut soll in einer eigenen Zeile gespeichert werden, im selben Format wie bei der Konsolenausgabe.
+
+    public void saveSortedAstronautsToFile() {
+        List<Astronaut> sortedAstronauts = sortAstronautsByExperienceAndName().reversed();
+        astronautRepo.saveSortedAstronautsToFile(sortedAstronauts);
+    }
+
 
 }

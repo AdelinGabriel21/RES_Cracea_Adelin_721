@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.model.Astronaut;
+import org.example.model.MissionEvent;
 import org.example.service.SpaceMissionService;
 
 import java.util.List;
@@ -19,8 +20,9 @@ public class SpaceMissionController {
         task1();
         task2();
         task3();
-//        task4();
+        task4();
 //        task5();
+//        task6();
     }
 
     public void task1() {
@@ -48,5 +50,10 @@ public class SpaceMissionController {
             System.out.println(a);
         }
         System.out.println("\n");
+    }
+
+
+    public void task4() {
+        spaceMissionService.saveSortedAstronautsToFile();
     }
 }
