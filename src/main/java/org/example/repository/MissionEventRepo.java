@@ -22,4 +22,15 @@ public class MissionEventRepo {
     public List<MissionEvent> getMissionEvents() {
         return missionEvents;
     }
+
+//    public void saveMissionReportToFile(List<MissionEvent> missionEvents) {
+//        try (java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter("mission_report.txt"))) {
+//            for (MissionEvent e : missionEvents) {
+//                writer.write(e.toString());
+//                writer.newLine();
+//            }
+//        } catch (java.io.IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

@@ -23,6 +23,7 @@ public class SpaceMissionController {
         task4();
         task5();
         task6();
+        task7();
     }
 
     public void task1() {
@@ -73,6 +74,9 @@ public class SpaceMissionController {
         spaceMissionService.getTop5AstronautsByTotalScore().forEach(System.out::println);
         System.out.println();
         System.out.println("Leading spacecraft: " + spaceMissionService.getLeadingSpacecraft());
-        System.out.println("\n");
+    }
+
+    public void task7() {
+        spaceMissionService.saveMissionReportToFile();
     }
 }

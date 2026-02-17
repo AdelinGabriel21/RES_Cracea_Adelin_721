@@ -210,4 +210,42 @@ public class SpaceMissionService {
                 .map(entry -> entry.substring(entry.indexOf('(') + 1, entry.indexOf(')')))
                 .orElse("N/A");
     }
+
+
+//7. (1 Punkt) Abschlussbericht
+//Erstellen Sie die Datei mission_report.txt, welche die Anzahl der MissionEvents pro MissionEventType (basierend auf events.json) enthält.
+//Sortierung:
+//● zuerst nach Anzahl absteigend
+//● bei Gleichstand nach Name aufsteigend
+//Ausgabeformat: <TYPE> -> <ANZAHL>
+//Ausgabe:
+//Inhalt der Datei mission_report.txt
+//EVA -> 6
+//SCIENCE -> 6
+//SYSTEM_FAILURE -> 6
+//COMMUNICATION -> 4
+//MEDICAL -> 3
+
+    public void saveMissionReportToFile() {
+        var eventTypeCounts = eventRepo.getMissionEvents().stream()
+                .collect(java.util.stream.Collectors.groupingBy(MissionEvent::getType, java.util.stream.Collectors.counting()))
+                .entrySet().stream()
+                .sorted((e1, e2) -> {
+                    int countComparison = Long.compare(e2.getValue(), e1.getValue());
+                    if (countComparison != 0) {
+                        return countComparison;
+                    }
+                    return e1.getKey().name().compareTo(e2.getKey().name());
+                })
+                .toList();
+
+        try (java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter("mission_report.txt"))) {
+            for (var entry : eventTypeCounts) {
+                writer.write(entry.getKey() + " -> " + entry.getValue());
+                writer.newLine();
+            }
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
