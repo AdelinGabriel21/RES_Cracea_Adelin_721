@@ -1,8 +1,12 @@
 package org.example.service;
 
+import org.example.model.Astronaut;
+import org.example.model.AstronautStatus;
 import org.example.repository.AstronautRepo;
 import org.example.repository.MissionEventRepo;
 import org.example.repository.SupplyRepo;
+
+import java.util.List;
 
 public class SpaceMissionService {
     private final AstronautRepo astronautRepo;
@@ -50,6 +54,25 @@ public class SpaceMissionService {
         supplyRepo.loadSupplies();
     }
 
+//2. (0.5 Punkte) Filtern nach spacecraft und Status
+//Lesen Sie von der Tastatur einen String spacecraft. Geben Sie anschließend nur die Astronauten aus, welche folgende Bedingungen erfüllen:
+//● spacecraft == input
+//● status == ACTIVE
+//Die Ausgabe erfolgt im selben Format wie in Aufgabe 1.
+//Ausgabe:
+//Input Spacecraft: Orion
+//[#1] Ava Ionescu | Orion | ACTIVE | exp=9
+//[#6] Andrei Dumitru | Orion | ACTIVE | exp=5
+//[#8] Victor Iliescu | Orion | ACTIVE | exp=6
+//[#11] Bianca Tudor | Orion | ACTIVE | exp=8
+//[#14] Teodor Matei | Orion | ACTIVE | exp=7
 
+
+    public List<Astronaut> getAstronautsBySpacecraftAndStatus(String spacecraft) {
+        return astronautRepo.getAstronauts().stream()
+                .filter(astronaut -> astronaut.getSpacecraft().equalsIgnoreCase(spacecraft))
+                .filter(astronaut -> astronaut.getStatus().equals(AstronautStatus.ACTIVE))
+                .toList();
+    }
 
 }

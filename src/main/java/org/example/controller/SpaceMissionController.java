@@ -1,7 +1,9 @@
 package org.example.controller;
 
+import org.example.model.Astronaut;
 import org.example.service.SpaceMissionService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SpaceMissionController {
@@ -15,7 +17,7 @@ public class SpaceMissionController {
 
     public void run() {
         task1();
-//        task2();
+        task2();
 //        task3();
 //        task4();
 //        task5();
@@ -25,6 +27,18 @@ public class SpaceMissionController {
         spaceMissionService.loadData();
         System.out.println();
         spaceMissionService.showAstronauts();
+        System.out.println("\n");
+    }
+
+    public void task2() {
+        System.out.print("Input Spacecraft: ");
+        String spacecraftInput = scanner.nextLine();
+
+        List<Astronaut> astronauts = spaceMissionService.getAstronautsBySpacecraftAndStatus(spacecraftInput);
+
+        for(Astronaut a: astronauts){
+            System.out.println(a);
+        }
         System.out.println("\n");
     }
 }
