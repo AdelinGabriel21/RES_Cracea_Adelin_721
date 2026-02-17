@@ -157,4 +157,57 @@ public class SpaceMissionService {
         };
     }
 
+//6. (1.5 Punkte) Ranking
+//Berechnen Sie für jeden Astronauten den Gesamtwert totalScore nach folgender Formel:
+//totalScore = Sum(computedPoints aus allen MissionEvents des Astronauten) + Sum(value aus allen Supplies des Astronauten)
+//Anforderungen:
+//● Berechnen Sie totalScore für alle Astronauten.
+//● Geben Sie die Top 5 auf der Konsole aus, sortiert nach:
+//● totalScore absteigend
+//● bei Gleichstand name aufsteigend
+//● Bestimmen und geben Sie zusätzlich das Leading spacecraft aus (= spacecraft des Astronauten auf Platz 1).
+//Ausgabeformat:
+//Top 5 Astronauts:
+//1. <Name> (<Spacecraft>) -> <totalScore>
+//...
+//Leading spacecraft: <Spacecraft>
+//Ausgabe:
+//Top 5 Astronauts:
+//1. Bianca Tudor (Orion) -> 70
+//2. Ava Ionescu (Orion) -> 51
+//3. Mihai Petrescu (Dragon) -> 47
+//4. Larisa Dobre (Dragon) -> 39
+//5. Radu Stan (Starliner) -> 25
+//Leading spacecraft: Orion
+
+    public List<String> getTop5AstronautsByTotalScore() {
+        return astronautRepo.getAstronauts().stream()
+                .map(astronaut -> {
+                    int totalScore = eventRepo.getMissionEvents().stream()
+                            .filter(event -> event.getAstronautId() == astronaut.getId())
+                            .mapToInt(this::calculateComputedPoints)
+                            .sum() + supplyRepo.getSupplies().stream()
+                            .filter(supply -> supply.getAstronautId() == astronaut.getId())
+                            .mapToInt(Supply::getValue)
+                            .sum();
+                    return new AbstractMap.SimpleEntry<>(astronaut, totalScore);
+                })
+                .sorted((e1, e2) -> {
+                    int scoreComparison = Integer.compare(e2.getValue(), e1.getValue());
+                    if (scoreComparison != 0) {
+                        return scoreComparison;
+                    }
+                    return e1.getKey().getName().compareTo(e2.getKey().getName());
+                })
+                .limit(5)
+                .map(entry -> entry.getKey().getName() + " (" + entry.getKey().getSpacecraft() + ") -> " + entry.getValue())
+                .toList();
+    }
+
+    public String getLeadingSpacecraft() {
+        return getTop5AstronautsByTotalScore().stream()
+                .findFirst()
+                .map(entry -> entry.substring(entry.indexOf('(') + 1, entry.indexOf(')')))
+                .orElse("N/A");
+    }
 }

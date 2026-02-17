@@ -22,7 +22,7 @@ public class SpaceMissionController {
         task3();
         task4();
         task5();
-//        task6();
+        task6();
     }
 
     public void task1() {
@@ -69,4 +69,10 @@ public class SpaceMissionController {
         System.out.println("\n");
     }
 
+    public void task6() {
+        spaceMissionService.getTop5AstronautsByTotalScore().forEach(System.out::println);
+        System.out.println();
+        System.out.println("Leading spacecraft: " + spaceMissionService.getLeadingSpacecraft());
+        System.out.println("\n");
+    }
 }
