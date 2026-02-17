@@ -21,7 +21,7 @@ public class SpaceMissionController {
         task2();
         task3();
         task4();
-//        task5();
+        task5();
 //        task6();
     }
 
@@ -56,4 +56,17 @@ public class SpaceMissionController {
     public void task4() {
         spaceMissionService.saveSortedAstronautsToFile();
     }
+
+    public void task5() {
+        List<MissionEvent> events = spaceMissionService.getMissionEvents();
+
+        int limit = Math.min(events.size(), 5);
+        for (int i = 0; i < limit; i++) {
+            MissionEvent event = events.get(i);
+            int score = spaceMissionService.calculateComputedPoints(event);
+            System.out.println("Event " + event.getId() + " -> raw=" + event.getBasePoints() + " -> computed=" + score);
+        }
+        System.out.println("\n");
+    }
+
 }

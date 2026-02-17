@@ -123,4 +123,38 @@ public class SpaceMissionService {
     }
 
 
+//5. (1.5 Punkte) Punktberechnung
+//Implementieren Sie die Berechnung der computedPoints für jedes MissionEvent gemäß den folgenden Regeln:
+//● EVA → computedPoints = basePoints + 2 * day
+//● SYSTEM_FAILURE → computedPoints = basePoints - 3 - day
+//● SCIENCE → computedPoints = basePoints + (day % 4)
+//● MEDICAL → computedPoints = basePoints - 2 * (day % 3)
+//● COMMUNICATION → computedPoints = basePoints + 5
+//Geben Sie anschließend die ersten 5 Events aus events.json auf der Konsole aus.
+//Ausgabeformat:
+//Event <id> -> raw=<basePoints> -> computed=<computedPoints>
+//Ausgabe:
+//Event 1 -> raw=4 -> computed=9
+//Event 2 -> raw=7 -> computed=8
+//Event 3 -> raw=5 -> computed=9
+//Event 4 -> raw=3 -> computed=-2
+//Event 5 -> raw=-2 -> computed=-2
+
+    public List<MissionEvent> getMissionEvents() {
+        return eventRepo.getMissionEvents();
+    }
+
+    public int calculateComputedPoints(MissionEvent event) {
+        int basePoints = event.getBasePoints();
+        int day = event.getDay();
+
+        return switch (event.getType()) {
+            case EVA -> basePoints + 2 * day;
+            case SYSTEM_FAILURE -> basePoints - 3 - day;
+            case SCIENCE -> basePoints + (day % 4);
+            case MEDICAL -> basePoints - 2 * (day % 3);
+            case COMMUNICATION -> basePoints + 5;
+        };
+    }
+
 }
